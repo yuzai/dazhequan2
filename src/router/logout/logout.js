@@ -8,7 +8,7 @@ export default function(nav,page){
   document.getElementById('success').innerHTML='登出成功，'+(time-1)+'s后返回首页';
   let s = setInterval(function(){
     time--;
-    if(time===0){
+    if(time===1){
       clearInterval(s);
       location.hash = '#/';
     }

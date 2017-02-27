@@ -1,5 +1,5 @@
 import method from '../../method/method';
-
+import config from '../../config';
 let form0 = `<form id='form0'>
   <label for='username'>用 户 名：</label><input name='username' type='text' id='username'/><span id='userwarn'></span><br>
   <label for='password1'>密 &nbsp 码：</label><input name = 'password1' type='password' id='password1'/><br>
@@ -10,6 +10,7 @@ let form0 = `<form id='form0'>
 
 export default function(nav,page){
   //先显示注册页面的form表单
+  console.log('测试map');
   page.innerHTML = form0;
   let form = document.getElementById('form0');
   //对form绑定submit事件
@@ -25,7 +26,7 @@ export default function(nav,page){
       if(password1 === password2){
           document.getElementById('success').innerHTML='已提交至服务器，请耐心等待';
           //从服务器端检验进行
-          method.ajax(JSON.stringify({'username':username,'password':password1}),'http://localhost:8082/register','post',function(responseText){
+          method.ajax(JSON.stringify({'username':username,'password':password1}),config+'register','post',function(responseText){
                   var info = JSON.parse(responseText);
                   console.log(info);
                   if(info.right === 'no'){
@@ -38,7 +39,7 @@ export default function(nav,page){
                     document.getElementById('success').innerHTML='登录成功，'+(time-1)+'s后返回首页';
                     let s = setInterval(function(){
                       time--;
-                      if(time===0){
+                      if(time===1){
                         clearInterval(s);
                         location.hash = '#/';
                       }

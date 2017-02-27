@@ -1,4 +1,5 @@
 import method from '../method/method';
+import config from '../config';
 
 export default function(nav,page){
   if(method.testlogin()){
@@ -16,7 +17,7 @@ export default function(nav,page){
   }
 
   //从服务器端获取商家发布的新信息
-  method.ajax(null,'http://localhost:8082/','post',function(responseText){
+  method.ajax(null,config,'post',function(responseText){
     let infos = JSON.parse(responseText);
     let s='1';
     let list = `<div>`;

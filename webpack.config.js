@@ -18,6 +18,7 @@ module.exports = {
       minChunks:2,
     }),
   ],
+  devtool: "cheap-eval-source-map",
   devServer:{
     contentBase:path.resolve(__dirname,'./dev'),
   },

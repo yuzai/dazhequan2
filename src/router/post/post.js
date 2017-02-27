@@ -1,5 +1,5 @@
 import method from '../../method/method';
-
+import config from '../../config';
 let post = `
 <form id='form3'>
   <textarea name='info' placeHolder='想要发布的打折信息'></textarea><br>
@@ -20,13 +20,13 @@ export default function(nav,page){
     method.addevent(form,'submit',function(form){
       event.preventDefault();
       document.getElementById('success').innerHTML='已提交至服务器，请耐心等待';
-      method.ajax(JSON.stringify({'token':localStorage.token,'info':this.info.value,'time':(new Date()).toLocaleString()}),'http://localhost:8082/post','post',function(responseText){
+      method.ajax(JSON.stringify({'token':localStorage.token,'info':this.info.value,'time':(new Date()).toLocaleString()}),config+'post','post',function(responseText){
         if(responseText==='yes'){
           let time = 3;
           document.getElementById('success').innerHTML='发布成功，'+(time-1)+'s后返回首页';
           let s = setInterval(function(){
             time--;
-            if(time===0){
+            if(time===1){
               clearInterval(s);
               location.hash = '#/';
             }
