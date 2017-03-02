@@ -17,6 +17,11 @@ module.exports = {
       filename:'common.js',
       minChunks:2,
     }),
+    new webpack.DefinePlugin({ // <-- 减少 React 大小的关键
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
   ],
   devtool: "cheap-eval-source-map",
   devServer:{
@@ -29,7 +34,11 @@ module.exports = {
         use:[{
           loader:'babel-loader',
           options:{
-            presets:['es2015']
+            presets:['es2015','react'],
+            plugins: [["import", {
+              "libraryName": "antd",
+              "style": 'css',   // or 'css'
+            }]]
           },
         }],
         exclude:/node_modules/
@@ -38,6 +47,10 @@ module.exports = {
         test:/\.css$/,
         use:['style-loader','css-loader'],
         exclude:/bootstrap.css/,
+      },
+      {
+        test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+        loader: 'url-loader?limit=50000&name=[path][name].[ext]'
       },
       {
         test: /\.(sass|scss)$/,

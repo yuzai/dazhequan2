@@ -32,4 +32,35 @@ method.testlogin = function(){
     return false;
   }
 }
+method.throttling1 = function(func,delay){
+  var inthrott = false;
+  console.log(delay);
+  return function(){
+    console.log('1');
+    var self = this;
+    var args = arguments;
+    if(!inthrott){
+      func.apply(self,args);
+      console.log(2);
+      inthrott = true;
+      setTimeout(function(){
+        inthrott = false;
+      },delay);
+    }
+  }
+}
+method.fadeIn = function($el,t){
+    var o = 1;
+    var step = 1/(t/50);
+    if(!$el.style.opacity){
+      $el.style.opacity = 1;
+    }
+    var timer = setInterval(function($el,step){
+      if($el.style.opacity<0){
+        clearInterval(timer);
+      }else {
+        $el.style.opacity -= step;
+      }
+    }.bind(null,$el,step),50);
+  }
 export default method;

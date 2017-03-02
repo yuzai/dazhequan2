@@ -15,7 +15,12 @@ export default function(nav,page){
     `;
     nav.innerHTML = mainlist;
   }
-
+  var progress = `<button id='progress' style='display:block;margin:0 auto;' class="am-btn am-btn-primary">
+                    <i class="am-icon-spinner am-icon-spin"></i>
+                    正在玩命加载中
+                  </button>
+  `;
+  page.innerHTML = progress;
   //从服务器端获取商家发布的新信息
   method.ajax(null,config,'post',function(responseText){
     let infos = JSON.parse(responseText);
@@ -31,6 +36,8 @@ export default function(nav,page){
     });
     list+='</div>';
     //将新信息写入page中，整个页面中，打折圈三个字是不变的，别的都是改变的
-    page.innerHTML = list;
+    page.innerHTML += list;
+    console.log(!document.getElementById('progress').style.opacity);
+     method.fadeIn(document.getElementById('progress'),1000);
   })
 }

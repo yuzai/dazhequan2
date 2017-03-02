@@ -1,9 +1,10 @@
 import method from '../../method/method';
 import config from '../../config';
 let post = `
-<form id='form3'>
-  <textarea name='info' placeHolder='想要发布的打折信息'></textarea><br>
-  <button id='cancel'>取消</cancel></button><input type='submit' value = '发布'><br>
+<form id='form3' class='am-form'>
+  <textarea name='info' placeHolder='想要发布的打折信息'></textarea>
+  <button id='cancel' class="am-btn am-btn-primary left">取消</button>
+  <button type="submit" id='sub' class="am-btn am-btn-primary right">发布</button>
   <span id='success'></span>
 </form>
 `
@@ -11,7 +12,7 @@ let post = `
 export default function(nav,page){
   if(method.testlogin()){
     let mainlist = `
-      <li><a href="#/post">发布</a></li>
+      <li><a href="#">主页</a></li>
       <li><a href="#/logout">登出</a></li>
     `;
     nav.innerHTML = mainlist;

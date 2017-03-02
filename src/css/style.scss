@@ -4,11 +4,6 @@
 //   padding-right:20%;
 //   padding-top:10px;
 // }
-//居中
-div#page{
-  margin:auto;
-  width:70%;
-}
 //drop-down
 .dropdown {
   position: relative;
@@ -163,4 +158,18 @@ form{
     width:100%;
     height:100px;
   }
+}
+.left{
+  float:left;
+}
+.right{
+  float:right;
+}
+
+@keyframes hide{
+  0%   {opacity:  0;}
+  2%   {opacity:  1;}
+  25%  {opacity: 0.75;}
+  50%  {opacity: 0.5;}
+  100% {opacity: 0;}
 }
