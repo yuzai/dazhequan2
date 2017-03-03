@@ -1,5 +1,6 @@
 import method from '../method/method';
 import config from '../config';
+import home from './style.scss';
 
 export default function(nav,page){
   if(method.testlogin()){
@@ -15,7 +16,7 @@ export default function(nav,page){
     `;
     nav.innerHTML = mainlist;
   }
-  var progress = `<button id='progress' style='display:block;margin:0 auto;' class="am-btn am-btn-primary">
+  var progress = `<button id='progress' class="am-btn am-btn-primary">
                     <i class="am-icon-spinner am-icon-spin"></i>
                     正在玩命加载中
                   </button>
@@ -25,19 +26,25 @@ export default function(nav,page){
   method.ajax(null,config,'post',function(responseText){
     let infos = JSON.parse(responseText);
     let s='1';
-    let list = `<div>`;
+    let list = `<ul class='info-container'>`;
     infos.forEach(function(data){
       list += `
-      <div>
-      <h1>${data.username}</h1>
-      <p style='padding-left:10%;'>${data.info}</p>
-      <p style='text-align:right;'>${data.time}</p><br>
-      </div>`;
+      <li class='info-item'>
+        <div class='info-img'><a><img class='info-img'></a></div>
+        <div class='info-mesg'>
+            <div class='row-1'>
+              <div class='item-title'><a>${data.info}</a></div>
+              <div class='item-time'>${data.time.slice(10)}</div>
+            </div>
+            <div class='row-2'>
+              <div class='item-user'>${data.username}</div>
+            </div>
+        </div>
+      </li><hr>`;
     });
-    list+='</div>';
+    list+='</ul>';
     //将新信息写入page中，整个页面中，打折圈三个字是不变的，别的都是改变的
     page.innerHTML += list;
-    console.log(!document.getElementById('progress').style.opacity);
-     method.fadeIn(document.getElementById('progress'),1000);
+    method.fadeIn(document.getElementById('progress'),1000);
   })
 }
