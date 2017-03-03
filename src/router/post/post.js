@@ -2,10 +2,16 @@ import method from '../../method/method';
 import config from '../../config';
 let post = `
 <form id='form3' class='am-form'>
-  <textarea name='info' placeHolder='想要发布的打折信息'></textarea>
-  <button id='cancel' class="am-btn am-btn-primary left">取消</button>
+<fieldset>
+  <label for='title'>标题:</label><input name='title' type='text' id='title' placeHolder='人人乐打折啦'/><span id='title-warn'></span><br>
+  <div class="am-form-group">
+      <label for='info'>内容:</label>
+      <textarea name='info' rows="10" placeHolder='想要发布的具体打折信息'></textarea>
+      <span id='info-warn'></span>
+    </div>
   <button type="submit" id='sub' class="am-btn am-btn-primary right">发布</button>
   <span id='success'></span>
+  </fieldset>
 </form>
 `
 
@@ -20,8 +26,16 @@ export default function(nav,page){
     let form = document.getElementById('form3');
     method.addevent(form,'submit',function(form){
       event.preventDefault();
+      if(!this.title.value || !this.info.value){
+        if(!this.title.value){
+          document.getElementById('title-warn').innerHTML="*标题不能为空";
+        }
+        if(!this.info.value){
+          document.getElementById('info-warn').innerHTML="*内容不能为空";
+        }
+      }else{
       document.getElementById('success').innerHTML='已提交至服务器，请耐心等待';
-      method.ajax(JSON.stringify({'token':localStorage.token,'info':this.info.value,'time':(new Date()).toLocaleString()}),config+'post','post',function(responseText){
+      method.ajax(JSON.stringify({'token':localStorage.token,'title':this.title.value,'info':this.info.value}),config+'post','post',function(responseText){
         if(responseText==='yes'){
           let time = 3;
           document.getElementById('success').innerHTML='发布成功，'+(time-1)+'s后返回首页';
@@ -38,7 +52,7 @@ export default function(nav,page){
           location.hash='#/login';
         }
       });
-    })
+    }})
   }else {
     let mainlist = `
       <li><a href="#/register">注册</a></li>

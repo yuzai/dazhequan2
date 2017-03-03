@@ -13,7 +13,6 @@ method.ajax = function(data,url,methods,handler){
   xhr.onreadystatechange = function(){
     if(xhr.readyState===4){
       if(xhr.status>=200 && xhr.status < 300||xhr.status === 304){
-        // console.log(xhr.responseText);
         handler(xhr.responseText);
       }
       else {
@@ -34,18 +33,37 @@ method.testlogin = function(){
 }
 method.throttling1 = function(func,delay){
   var inthrott = false;
-  console.log(delay);
   return function(){
-    console.log('1');
     var self = this;
     var args = arguments;
     if(!inthrott){
       func.apply(self,args);
-      console.log(2);
       inthrott = true;
       setTimeout(function(){
         inthrott = false;
       },delay);
+    }
+  }
+}
+method.throttling2 = function(func,delay){
+  var inthrott = false;
+  var timer;
+  return function(){
+    var self = this;
+    var args = arguments;
+    var last = false;
+    if(!inthrott){
+      func.apply(self,args);
+      inthrott = true;
+      setTimeout(function(){
+        inthrott = false;
+      },delay);
+    }else {
+      clearTimeout(timer);
+      timer = setTimeout(function(){
+        func.apply(self,args);
+        inthrott = false;
+      },500);
     }
   }
 }

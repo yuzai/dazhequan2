@@ -4,6 +4,11 @@
   left:50%;
   transform: translateX(-50%);
 }
+#progress2{
+  display:flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
 .info-container{
   width:100%;
   margin:0;
@@ -19,6 +24,7 @@
     width:100%;
     height:100px;
     .info-img{
+      outline:1px solid #0e90d2;
       width:100px;
       height:100%;
       flex-grow:0;

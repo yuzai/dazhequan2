@@ -5,7 +5,7 @@ let form1 = `<form id='form1' class='am-form'>
   <legend>欢迎登录</legend>
   <label for='username'>用户名：</label><input name='username' type='text' id='username' placeHolder='username'/><span id='userwarn'></span><br>
   <label for='password'>密&nbsp码：</label><input name = 'password' type='password' id='password' /><span id='passwarn'></span><br>
-  <button type="submit" id='sub' class="am-btn am-btn-primary">Submit</button>
+  <button type="submit" id='sub' class="am-btn am-btn-primary">Submit</button><br>
   <span id='success'></span>
   </fieldset>
 </form>`;

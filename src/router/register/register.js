@@ -6,7 +6,7 @@ let form0 = `<form id='form0' class='am-form'>
   <label for='username'>用 户 名：</label><input name='username' type='text' id='username'/><span id='userwarn'></span><br>
   <label for='password1'>密 &nbsp 码：</label><input name = 'password1' type='password' id='password1'/><br>
   <label for='password2'>重复密码：</label><input name = 'password2' type='password' id='password2'/><span id='passwarn'></span><br>
-  <button type="submit" id='sub' class="am-btn am-btn-primary">Submit</button>
+  <button type="submit" id='sub' class="am-btn am-btn-primary">Submit</button><br>
   <span id='success'></span>
   </fieldset>
 </form>`;

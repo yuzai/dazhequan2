@@ -139,7 +139,7 @@
   font-size:40px;
   margin:10px;
 }
-#passwarn,#userwarn{
+#passwarn,#userwarn,#info-warn,#title-warn{
   color:red;
   font-size:5px;
 }
@@ -147,17 +147,16 @@ form{
   margin:10px;
   padding:4px;
 }
-#form3{
-  text-align:center;
-  input{
-    float:right;
-    margin-right:3%;
-  }
-  textarea{
-    width:100%;
-    height:100px;
-  }
-}
+// #form3{
+//   input{
+//     float:right;
+//     margin-right:3%;
+//   }
+//   textarea{
+//     width:100%;
+//     height:100px;
+//   }
+// }
 .left{
   float:left;
 }
