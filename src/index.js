@@ -1,4 +1,4 @@
-import amaze from './css/amazeui.css';
+
 import style from './css/style.scss';
 import method from './method/method';
 import router from './router/route';

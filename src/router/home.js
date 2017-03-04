@@ -31,9 +31,9 @@ function getInfo(){
         <div class='info-mesg'>
             <div class='row-1'>
               <div class='item-title'><a>${data.title}</a></div>
-              <div class='item-time'>${data.time}</div>
             </div>
             <div class='row-2'>
+              <div class='item-time'>${data.time}</div>
               <div class='item-user'>${data.username}</div>
             </div>
         </div>
