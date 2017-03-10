@@ -67,6 +67,17 @@ method.throttling2 = function(func,delay){
     }
   }
 }
+method.debounce = function(func,delay){
+  var timer;
+  return function(){
+    var args = arguments;
+    var context = this;
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+      func.apply(this,args);
+    },delay);
+  }
+}
 method.fadeIn = function($el,t){
     var o = 1;
     var step = 1/(t/50);

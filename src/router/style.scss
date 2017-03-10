@@ -17,6 +17,10 @@
   cursor:pointer;
   flex-flow: column nowrap;
   padding:0;
+  .info-fenge{
+    border-top:1px solid rgb(238,238,238);
+    margin:19px 0 20px 0;
+  }
   .info-item{
     display:flex;
     justify-content: space-between;
@@ -29,6 +33,12 @@
       height:100%;
       flex-grow:0;
       flex-shrink: 0;
+      .img{
+        width:100px;
+        height:100px;
+        opacity:0;
+        transition:opacity 1s ease;
+      }
     }
     .info-mesg{
       padding:0 2%;
