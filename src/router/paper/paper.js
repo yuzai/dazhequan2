@@ -1,3 +1,4 @@
+import animate from '../../method/components';
 import style from './style.scss';
 import method from '../../method/method';
 import config from '../../config';
@@ -24,14 +25,21 @@ var paper = function(nav,page,paper_info,paper_id){
     ul.setAttribute('class','info-container');
     ul.appendChild(paper_info);
     page.appendChild(ul);
+    var div = document.createElement('div');
+    div.style.position = 'relative';
+    page.appendChild(div);
+    var load = new animate.load(div,'loading');
+    load.mount();
     method.ajax(JSON.stringify({_id:paper_id}),config+'paper','post',function(responseText){
+      load.fadeIn();
       var data = JSON.parse(responseText);
-      var div = document.createElement('div');
       div.innerHTML = data.content;
-      page.appendChild(div);
     })
   }else {
+    var load = new animate.load(page,'loading');
+    load.mount();
     method.ajax(JSON.stringify({_id:paper_id}),config+'paper','post',function(responseText){
+      load.fadeIn();
       var data = JSON.parse(responseText);
       var ul = document.createElement('ul');
       ul.setAttribute('class','info-container');

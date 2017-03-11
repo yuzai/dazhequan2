@@ -1,4 +1,5 @@
 import method from '../../method/method';
+import animate from '../../method/components';
 import config from '../../config';
 let form0 = `<form id='form0' class='am-form'>
   <fieldset>
@@ -56,16 +57,7 @@ export default function(nav,page){
                       localStorage.sign_in = true;
                       // localStorage.username = username;
                       localStorage.token = info.token;
-                      let time = 3;
-                      document.getElementById('success').innerHTML='登录成功，'+(time-1)+'s后返回首页';
-                      let s = setInterval(function(){
-                        time--;
-                        if(time===1){
-                          clearInterval(s);
-                          location.hash = '#/';
-                        }
-                        document.getElementById('success').innerHTML='登录成功，'+(time-1)+'s后返回首页';
-                      },1000);
+                      animate.daojishi(document.getElementById('success'),'登录成功，','s后返回首页');
                     }
                   }
             );

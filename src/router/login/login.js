@@ -1,3 +1,4 @@
+import animate from '../../method/components';
 import method from '../../method/method';
 import config from '../../config';
 let form1 = `<form id='form1' class='am-form'>
@@ -56,16 +57,7 @@ export default function(nav,page){
               localStorage.sign_in = true;
               localStorage.token = info.token;
               // localStorage.username = username;
-              let time = 3;
-              document.getElementById('success').innerHTML='登录成功，'+(time-1)+'s后返回首页';
-              let s = setInterval(function(){
-                time--;
-                if(time===1){
-                  clearInterval(s);
-                  location.hash = '#/';
-                }
-                document.getElementById('success').innerHTML='登录成功，'+(time-1)+'s后返回首页';
-              },1000);
+              animate.daojishi(document.getElementById('success'),'登录成功，','s后返回首页');
             }
             console.log(responseText)
           });

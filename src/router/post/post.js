@@ -1,3 +1,4 @@
+import animate from '../../method/components';
 import method from '../../method/method';
 import config from '../../config';
 let post = `
@@ -37,16 +38,7 @@ export default function(nav,page){
       document.getElementById('success').innerHTML='已提交至服务器，请耐心等待';
       method.ajax(JSON.stringify({'token':localStorage.token,'title':method.html_encode(this.title.value),'info':method.html_encode(this.info.value)}),config+'post','post',function(responseText){
         if(responseText==='yes'){
-          let time = 3;
-          document.getElementById('success').innerHTML='发布成功，'+(time-1)+'s后返回首页';
-          let s = setInterval(function(){
-            time--;
-            if(time===1){
-              clearInterval(s);
-              location.hash = '#/';
-            }
-            document.getElementById('success').innerHTML='发布成功，'+(time-1)+'s后返回首页';
-          },1000);
+          animate.daojishi(document.getElementById('success'),'发布成功，','s后返回首页');
         }else {
           alert('用户未登陆');
           location.hash='#/login';
@@ -60,16 +52,7 @@ export default function(nav,page){
     `;
     menulist.innerHTML = mainlist;
     page.innerHTML = `<h1>您尚未登录</h1><span id='success'></span>`;
-    let time = 3;
-    document.getElementById('success').innerHTML='尚未登录，'+(time-1)+'s后返回首页';
-    let s = setInterval(function(){
-      time--;
-      if(time===0){
-        clearInterval(s);
-        location.hash = '#/login';
-      }
-      document.getElementById('success').innerHTML='尚未登录，'+(time-1)+'s后返回首页';
-    },1000);
+    animate.daojishi(document.getElementById('success'),'尚未登录，','s后返回首页');
   }
 
 }
