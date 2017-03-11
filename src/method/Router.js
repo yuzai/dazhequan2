@@ -14,6 +14,7 @@ Router.prototype.refresh = function(){
     this.methods[this.currenturl]();
   }else {
     console.log(this.currenturl);
+    this.methods['/nopage']();
   }
 }
 Router.prototype.init = function(){
