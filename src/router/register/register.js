@@ -38,9 +38,9 @@ export default function(nav,page){
     if(!inthrott){
       inthrott = true;
       let form = event.target;
-      let username = form.username.value;
-      let password1 = form.password1.value;
-      let password2 = form.password2.value;
+      let username = method.html_encode(form.username.value);
+      let password1 = method.html_encode(form.password1.value);
+      let password2 = method.html_encode(form.password2.value);
       //用户名以及密码不能为空
       if(username && password1 && password2){
         //校验两次密码是否一致

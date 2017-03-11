@@ -24,7 +24,7 @@ router.route('/register',register.bind(null,nav,page));
 router.route('/nopage',nopage.bind(null,nav,page));
 
 //各个文章页面的路由
-var reg = /\/paper\/([a-fA-F0-9]{24})/;
+var reg = /^\/paper\/([a-fA-F0-9]{24})$/;
 router.page = function(paper_info){
   var paper_id = this.currenturl.match(reg)[1];
   paper(nav,page,paper_info,paper_id);

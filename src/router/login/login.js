@@ -37,8 +37,8 @@ export default function(nav,page){
     if(!inthrott){
       inthrott = true;
       let form = event.target;
-      let username = form.username.value;
-      let password = form.password.value;
+      let username = method.html_encode(form.username.value);
+      let password = method.html_encode(form.password.value);
       if(username && password){
           document.getElementById('success').innerHTML='已提交至服务器，请耐心等待';
           //如果用户名和密码都进行了填写，用ajax将其发送至服务器端，根据不同的反应进行不同的处理

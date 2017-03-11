@@ -72,7 +72,6 @@ function getInfo(){
     let infos = JSON.parse(responseText);
     let s='1';
     let list = ``;
-    console.log(infos);
     infos.forEach(function(data){
       list += `
       <li class='info-item'>
@@ -103,7 +102,10 @@ function getInfo(){
       lazy_load();
     }
     if(eleheight===0 && document.getElementsByClassName('info-item')[0]) eleheight = document.getElementsByClassName('info-item')[0].clientHeight;
-    method.fadeIn(document.getElementById('progress'),1000);
+    document.getElementById('progress').style.opacity = 0;
+    setTimeout(function(){
+      document.getElementById('progress').style.display = 'none';
+    },1000)
     state = true;
   })
 }

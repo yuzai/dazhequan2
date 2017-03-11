@@ -35,7 +35,7 @@ export default function(nav,page){
         }
       }else{
       document.getElementById('success').innerHTML='已提交至服务器，请耐心等待';
-      method.ajax(JSON.stringify({'token':localStorage.token,'title':this.title.value,'info':this.info.value}),config+'post','post',function(responseText){
+      method.ajax(JSON.stringify({'token':localStorage.token,'title':method.html_encode(this.title.value),'info':method.html_encode(this.info.value)}),config+'post','post',function(responseText){
         if(responseText==='yes'){
           let time = 3;
           document.getElementById('success').innerHTML='发布成功，'+(time-1)+'s后返回首页';
