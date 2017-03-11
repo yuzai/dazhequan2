@@ -2,6 +2,7 @@ import method from '../method/method';
 import config from '../config';
 import home from './style.scss';
 
+var paper_info;
 //记录请求的文章id
 let num = 0;
 
@@ -16,7 +17,6 @@ var img_data =[];
 
 //记录表单的距离页面顶端的距离
 var list_height = 0;
-
 //预加载函数判决
 function scrollTop(){
   var height1 = document.body.scrollTop+document.body.clientHeight;
@@ -72,13 +72,14 @@ function getInfo(){
     let infos = JSON.parse(responseText);
     let s='1';
     let list = ``;
+    console.log(infos);
     infos.forEach(function(data){
       list += `
       <li class='info-item'>
         <div class='info-img'>  <img class='img' img-index = ${num} ></div>
         <div class='info-mesg'>
             <div class='row-1'>
-              <div class='item-title'><a>${data.title}</a></div>
+              <div class='item-title'><a href = '#/paper/${data._id}'>${data.title}</a></div>
             </div>
             <div class='row-2'>
               <div class='item-time'>${data.time}</div>
@@ -109,6 +110,11 @@ function getInfo(){
 
 //主函数
 export default function(nav,page){
+  num = 0;
+  eleheight=0;
+  img_data =[];
+  list_height = 0;
+  state = true;
   if(method.testlogin()){
     let mainlist = `
         <li><a href="#/post">发布</a></li>
@@ -137,7 +143,23 @@ export default function(nav,page){
   `;
   page.innerHTML = progress;
   list_height = getH(document.getElementById('list'));
-  method.addevent(window,'scroll',method.throttling2(scrollTop,1000))
-  method.addevent(window,'scroll',method.debounce(lazy_load,500));
+  var scroll_event = method.throttling2(scrollTop,1000);
+  var lazy_event = method.debounce(lazy_load,500);
+  method.addevent(window,'scroll',scroll_event)
+  method.addevent(window,'scroll',lazy_event);
   getInfo();
+  var click_event = function(event){
+    var target = event.target;
+    if(target.href){
+      if(location.hash === '' || location.hash === '#/' );
+      {
+        method.removeevent(window,'scroll',scroll_event);
+        method.removeevent(window,'scroll',lazy_event);
+        method.removeevent(window,'click',click_event);
+      }
+      paper_info = target.parentNode.parentNode.parentNode.parentNode;
+    }
+  };
+  method.addevent(window,'click',click_event);
 }
+export {paper_info};

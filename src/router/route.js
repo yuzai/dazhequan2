@@ -4,6 +4,9 @@ import logout from './logout/logout';
 import post from './post/post';
 import home from './home';
 import nopage from './nopage/p404';
+import paper from './paper/paper';
+import {paper_info} from './home';
+
 import Router from '../method/Router';
 
 let router = new Router();
@@ -19,5 +22,22 @@ router.route('/logout',logout.bind(null,nav,page));
 router.route('/post',post.bind(null,nav,page));
 router.route('/register',register.bind(null,nav,page));
 router.route('/nopage',nopage.bind(null,nav,page));
-console.log(router.methods);
+
+//各个文章页面的路由
+var reg = /\/paper\/([a-fA-F0-9]{24})/;
+router.page = function(paper_info){
+  var paper_id = this.currenturl.match(reg)[1];
+  paper(nav,page,paper_info,paper_id);
+}
+router.refresh = function(){
+  this.currenturl = location.hash.slice(1) || '/';
+  if(this.methods[this.currenturl]){
+    this.methods[this.currenturl]();
+  }else if(reg.test(this.currenturl)){
+    this.page(paper_info);
+  }else {
+    console.log(this.currenturl);
+    this.methods['/nopage']();
+  }
+}
 export default router;

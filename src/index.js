@@ -1,11 +1,10 @@
-
 import style from './css/style.scss';
 import method from './method/method';
 import router from './router/route';
 router.init();
 
 //注册menu下拉菜单事件。
-method.addevent(window,'click',function(){
+method.addevent(window,'click',function(event){
   let dropmenu = document.getElementsByClassName('dropdown-menu')[0];
   dropmenu.style.display = 'none';
 })

@@ -8,6 +8,15 @@ method.addevent = function(element,type,handler){
        element['on'+type]=handler;
     }
 };
+method.removeevent = function(element,type,handler){
+  if(element.removeEventListener){
+    element.removeEventListener(type,handler,false);
+  }else if(element.detachEvent){
+      element.detachEvent('on'+type,handler);
+    }else {
+       element['on'+type]=null;
+    }
+};
 method.ajax = function(data,url,methods,handler){
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function(){

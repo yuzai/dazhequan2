@@ -1,3 +1,6 @@
+.am-btn{
+  cursor:default;
+}
 #progress{
   position:absolute;
   top:0;
@@ -14,7 +17,6 @@
   margin:0;
   list-style: none;
   display:flex;
-  cursor:pointer;
   flex-flow: column nowrap;
   padding:0;
   .info-fenge{

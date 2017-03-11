@@ -4,12 +4,14 @@
 //   padding-right:20%;
 //   padding-top:10px;
 // }
+body{
+  min-height:1%;
+}
 //drop-down
 .dropdown {
-  position: relative;
-  float:right;
-  margin-right:10%;
-  margin-top:10px;
+  position: absolute;
+  top:10px;
+  right:10%;
 }
 //dropdown-menu
 .dropdown-menu {
