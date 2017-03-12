@@ -45,8 +45,6 @@ function getH(obj) {
 
 //图片懒加载的实现函数
 function lazy_load(){
-  // console.log(img_data);
-  // console.log('lazy_load');
   var height1 = document.body.scrollTop+document.body.clientHeight;
   img_data.forEach(function(item){
     if(!item.loaded && item.height>document.body.scrollTop-100 && item.height < height1){
