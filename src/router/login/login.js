@@ -56,7 +56,7 @@ export default function(nav,page){
             }else if(info.right === 'yes'){
               localStorage.sign_in = true;
               localStorage.token = info.token;
-              // localStorage.username = username;
+              localStorage.username = username;
               animate.daojishi(document.getElementById('success'),'登录成功，','s后返回首页');
             }
             console.log(responseText)

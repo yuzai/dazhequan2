@@ -84,8 +84,20 @@
         .item-user{
            align-items: center;
         }
-        .item-time{
-          // width:30%;
+        .item-emoji{
+          display:flex;
+          flex-flow:row nowrap;
+          width:50%;
+          justify-content: space-around;
+          .item-heart{
+            cursor: pointer;
+            i,.like{
+                color: red;
+              }
+            i,.unlike{
+                color:grey;
+              }
+          }
           // text-align:right;
         }
       }
@@ -98,5 +110,13 @@
       //   text-overflow:ellipsis;
       // }
     }
+  }
+}
+i{
+  .unlike{
+    color:grey;
+  }
+  .like{
+    color:red;
   }
 }

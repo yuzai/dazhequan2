@@ -3,6 +3,8 @@ import method from '../method/method';
 import config from '../config';
 import home from './style.scss';
 
+var reg = /^[a-fA-F0-9]{24}$/;
+
 var paper_info;
 //记录请求的文章id
 let num = 0;
@@ -50,7 +52,8 @@ function lazy_load(){
     if(!item.loaded && item.height>document.body.scrollTop-100 && item.height < height1){
       var img = document.querySelector("img[img-index='"+item.index+"']");
       if(img){
-        img.src = item.src;
+        // img.src = item.src;
+        img.src = '/failed.jpg';
         item.loaded = true;
         img.onload = function(){
           img.style.opacity = 1;
@@ -75,6 +78,7 @@ function getInfo(){
     let s='1';
     let list = ``;
     infos.forEach(function(data){
+      var init = (data.like.indexOf(localStorage.username)===-1)?'unlike':'like';
       list += `
       <li class='info-item'>
         <div class='info-img'>  <img class='img' img-index = ${num} ></div>
@@ -83,7 +87,10 @@ function getInfo(){
               <div class='item-title'><a href = '#/paper/${data._id}'>${data.title}</a></div>
             </div>
             <div class='row-2'>
-              <div class='item-time'>${data.time}</div>
+              <div class='item-emoji'>
+                <div class='item-heart'><i data-index='${data._id}' data-init ='${init}' class="am-icon-heart ${init}">${data.like.length}</i></div>
+                <div class='item-time'>${data.time}</div>
+              </div>
               <div class='item-user'>${data.username}</div>
             </div>
         </div>
@@ -103,7 +110,6 @@ function getInfo(){
     if(eleheight === 0){
       lazy_load();
       var loading2  = new animate.load(page,"loading","bottom");
-      console.log(1);
       loading2.mount();
     }
     if(eleheight===0 && document.getElementsByClassName('info-item')[0]) eleheight = document.getElementsByClassName('info-item')[0].clientHeight;
@@ -148,6 +154,8 @@ export default function(nav,page){
   method.addevent(window,'scroll',scroll_event)
   method.addevent(window,'scroll',lazy_event);
   getInfo();
+  var click_num = {};
+  var timer = null;
   var click_event = function(event){
     var target = event.target;
     if(target.href){
@@ -158,6 +166,34 @@ export default function(nav,page){
         method.removeevent(window,'click',click_event);
       }
       paper_info = target.parentNode.parentNode.parentNode.parentNode;
+    }else if(target.tagName === 'I' && reg.test(target.dataset.index)){
+       var classes = target.className.split(' ');
+       var index = classes.indexOf('like');
+       if(index===-1){
+         target.className = target.className.replace('unlike','like');
+         target.innerHTML = (Number(target.innerHTML))+1;
+       }else {
+         target.className = target.className.replace('like','unlike');
+         target.innerHTML = (Number(target.innerHTML))-1;
+       }
+       var _id = target.dataset.index;
+       click_num[_id] = !click_num[_id];
+       clearTimeout(timer);
+       timer = setTimeout(function(){
+         console.log(click_num);
+         for(var id in click_num){
+           if(click_num[id])
+           {
+             click_num[id] = !click_num[id];
+             console.log('send');
+             method.ajax(JSON.stringify({username:localStorage.username,_id:id}),config+'like','post',function(responseText){
+               console.log(responseText);
+             })
+           }
+         }
+         click_num = {};
+         console.log(click_num);
+      },2000);
     }
   };
   method.addevent(window,'click',click_event);

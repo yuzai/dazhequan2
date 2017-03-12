@@ -29,9 +29,16 @@ method.ajax = function(data,url,methods,handler){
       }
     }
   };
+  xhr.onerror = function(){
+    console.log("error");
+  }
   xhr.open(methods,url,true);
-  xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-  xhr.send(data);
+  if(methods === 'post'){
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send(data);
+  }else if(methods === 'get'){
+    xhr.send();
+  }
 }
 method.testlogin = function(){
   if(localStorage.sign_in==='true'){
@@ -112,7 +119,7 @@ method.htmlDecode = function(str) {
       div.innerHTML = str;
       return div.innerHTML;
 }
-method.html_encode = function(str)   
+method.html_encode = function(str)
 {
   var s = "";
   if (str.length == 0) return "";

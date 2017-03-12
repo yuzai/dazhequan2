@@ -55,7 +55,7 @@ export default function(nav,page){
                       document.getElementById('userwarn').innerHTML=`*用户名已存在`;
                     }else if(info.right === 'yes'){
                       localStorage.sign_in = true;
-                      // localStorage.username = username;
+                      localStorage.username = username;
                       localStorage.token = info.token;
                       animate.daojishi(document.getElementById('success'),'登录成功，','s后返回首页');
                     }
