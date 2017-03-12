@@ -13,7 +13,7 @@ module.exports = {
   },
   plugins:[
     new webpack.optimize.CommonsChunkPlugin({
-      name:'commons',
+      name:['commons'],
       filename:'common.js',
       minChunks:2,
     }),

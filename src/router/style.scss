@@ -1,9 +1,14 @@
 .am-btn{
   cursor:default;
 }
-#progress{
-  position:absolute;
+.top{
   top:0;
+}
+.bottom{
+  bottom:5px;
+}
+.progress{
+  position:absolute;
   left:50%;
   transform: translateX(-50%);
   opacity:1;
@@ -13,6 +18,7 @@
   display:flex;
   flex-flow: row nowrap;
   justify-content: center;
+  padding:0 0 1% 0;
 }
 .info-container{
   width:100%;

@@ -32,6 +32,7 @@ var paper = function(nav,page,paper_info,paper_id){
     load.mount();
     method.ajax(JSON.stringify({_id:paper_id}),config+'paper','post',function(responseText){
       load.fadeIn();
+      load = null;
       var data = JSON.parse(responseText);
       div.innerHTML = data.content;
     })

@@ -30,26 +30,36 @@ content:加载的时候要显示的信息
 mount:进行挂载
 fadeIn:渐隐并移除
 */
-animate.load = function(parent,content){
-  var loading = content || "正在玩命加载中";
-  var button = document.createElement('button');
-  button.id = 'progress';
-  button.setAttribute('class','am-btn am-btn-primary');
-  button.innerHTML = `<i class="am-icon-spinner am-icon-spin"></i>
-                      ${loading}
-                      `
-  animate.load.prototype.mount = function(){
-    if(parent instanceof HTMLElement){
-      parent.appendChild(button);
-    }
+animate.load = function(parent,content,direction){
+  this.parent = parent;
+  this.loading = content || "正在玩命加载中";
+  this.fangxiang = direction || "top";
+  this.button = document.createElement('button');
+  var Class = 'am-btn am-btn-primary progress';
+  if(this.fangxiang === 'bottom'){
+    Class+=' bottom';
+  }else if(this.fangxiang === 'top'){
+    Class+=' top';
   }
-  animate.load.prototype.fadeIn = function(){
-    if(button){
-      button.style.opacity = 0;
-      setTimeout(function(){
-        // parent.removeChild(button);
-      },1000)
-    }
+  this.button.setAttribute('class',Class);
+  this.button.innerHTML = `<i class="am-icon-spinner am-icon-spin"></i>
+                      ${this.loading}
+                      `
+}
+animate.load.prototype.mount = function(){
+  if(this.parent instanceof HTMLElement){
+    this.parent.appendChild(this.button);
+  }
+}
+animate.load.prototype.fadeIn = function(){
+  if(this.button){
+    this.button.style.opacity = 0;
+    var self = this;
+    setTimeout(function(){
+      if(self.button.parentNode === self.parent){
+        self.parent.removeChild(self.button);
+      }
+    },1000)
   }
 }
 // var s = new animate.load(document.body);

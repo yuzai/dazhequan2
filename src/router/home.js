@@ -1,3 +1,4 @@
+import animate from '../method/components';
 import method from '../method/method';
 import config from '../config';
 import home from './style.scss';
@@ -15,6 +16,7 @@ let state = true;
 //记录图片数据，index,src,height三个关键元素
 var img_data =[];
 
+var loading;
 //记录表单的距离页面顶端的距离
 var list_height = 0;
 //预加载函数判决
@@ -100,12 +102,16 @@ function getInfo(){
     document.getElementById('list').appendChild(div);
     if(eleheight === 0){
       lazy_load();
+      var loading2  = new animate.load(page,"loading","bottom");
+      console.log(1);
+      loading2.mount();
     }
     if(eleheight===0 && document.getElementsByClassName('info-item')[0]) eleheight = document.getElementsByClassName('info-item')[0].clientHeight;
-    document.getElementById('progress').style.opacity = 0;
-    setTimeout(function(){
-      document.getElementById('progress').style.display = 'none';
-    },1000)
+    if(loading)
+    {
+      loading.fadeIn();
+      loading = null;
+    }
     state = true;
   })
 }
@@ -130,20 +136,12 @@ export default function(nav,page){
     `;
     nav.innerHTML = mainlist;
   }
-  var progress = `<button id='progress' class="am-btn am-btn-primary">
-                    <i class="am-icon-spinner am-icon-spin"></i>
-                    正在玩命加载中
-                  </button>
-                  <ul id = 'list' class='info-container'>
+  loading = new animate.load(page,"loading","top");
+  var progress = `<ul id = 'list' class='info-container'>
                   </ul>
-                  <div id='progress2'>
-                  <button class="am-btn am-btn-primary">
-                    <i class="am-icon-spinner am-icon-spin"></i>
-                    正在玩命加载中
-                  </button>
-                  </div>
   `;
   page.innerHTML = progress;
+  loading.mount();
   list_height = getH(document.getElementById('list'));
   var scroll_event = method.throttling2(scrollTop,1000);
   var lazy_event = method.debounce(lazy_load,500);
