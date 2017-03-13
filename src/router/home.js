@@ -177,19 +177,17 @@ export default function(nav,page){
          click_num[_id] = !click_num[_id];
          clearTimeout(timer);
          timer = setTimeout(function(){
-           console.log(click_num);
            for(var id in click_num){
              if(click_num[id])
              {
                click_num[id] = !click_num[id];
                console.log('send');
                method.ajax(JSON.stringify({username:localStorage.username,_id:id}),config+'like','post',function(responseText){
-                 console.log(responseText);
+                //  console.log(responseText);
                })
              }
            }
            click_num = {};
-           console.log(click_num);
         },2000);
       }else {
         alert("尚未登录，请登录");
