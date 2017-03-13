@@ -51,7 +51,7 @@ function lazy_load(){
       var img = document.querySelector("img[img-index='"+item.index+"']");
       if(img){
         // img.src = item.src;
-        img.src = '/failed.jpg';
+        img.src = item.src;
         item.loaded = true;
         img.onload = function(){
           img.style.opacity = 1;
@@ -85,10 +85,8 @@ function getInfo(){
               <div class='item-title'><a href = '#/paper/${data._id}'>${data.title}</a></div>
             </div>
             <div class='row-2'>
-              <div class='item-emoji'>
-                <div class='item-heart'><i data-index='${data._id}' data-init ='${init}' class="am-icon-heart ${init}">${data.like.length}</i></div>
-                <div class='item-time'>${data.time}</div>
-              </div>
+              <div class='item-heart'><i data-index='${data._id}' data-init ='${init}' class="am-icon-heart ${init}">${data.like.length}</i></div>
+              <div class='item-time'>${data.time}</div>
               <div class='item-user'>${data.username}</div>
             </div>
         </div>
@@ -96,8 +94,8 @@ function getInfo(){
 
       img_data.push({
         index:(num),
-        height:list_height+(140)*(num),
-        src:'http://imgstore.cdn.sogou.com/app/a/100540002/'+(num++)+'_s_90_2_219x160.jpg',
+        height:list_height+(140)*(num++),
+        src:config+'upload/'+data.imgsrc[0],
         loaded:false
       })
     });
@@ -165,33 +163,38 @@ export default function(nav,page){
       }
       paper_info = target.parentNode.parentNode.parentNode.parentNode;
     }else if(target.tagName === 'I' && reg.test(target.dataset.index)){
-       var classes = target.className.split(' ');
-       var index = classes.indexOf('like');
-       if(index===-1){
-         target.className = target.className.replace('unlike','like');
-         target.innerHTML = (Number(target.innerHTML))+1;
-       }else {
-         target.className = target.className.replace('like','unlike');
-         target.innerHTML = (Number(target.innerHTML))-1;
-       }
-       var _id = target.dataset.index;
-       click_num[_id] = !click_num[_id];
-       clearTimeout(timer);
-       timer = setTimeout(function(){
-         console.log(click_num);
-         for(var id in click_num){
-           if(click_num[id])
-           {
-             click_num[id] = !click_num[id];
-             console.log('send');
-             method.ajax(JSON.stringify({username:localStorage.username,_id:id}),config+'like','post',function(responseText){
-               console.log(responseText);
-             })
-           }
+      if(method.testlogin()){
+         var classes = target.className.split(' ');
+         var index = classes.indexOf('like');
+         if(index===-1){
+           target.className = target.className.replace('unlike','like');
+           target.innerHTML = (Number(target.innerHTML))+1;
+         }else {
+           target.className = target.className.replace('like','unlike');
+           target.innerHTML = (Number(target.innerHTML))-1;
          }
-         click_num = {};
-         console.log(click_num);
-      },2000);
+         var _id = target.dataset.index;
+         click_num[_id] = !click_num[_id];
+         clearTimeout(timer);
+         timer = setTimeout(function(){
+           console.log(click_num);
+           for(var id in click_num){
+             if(click_num[id])
+             {
+               click_num[id] = !click_num[id];
+               console.log('send');
+               method.ajax(JSON.stringify({username:localStorage.username,_id:id}),config+'like','post',function(responseText){
+                 console.log(responseText);
+               })
+             }
+           }
+           click_num = {};
+           console.log(click_num);
+        },2000);
+      }else {
+        alert("尚未登录，请登录");
+        location.hash = '#/login';
+      }
     }
   };
   method.addevent(window,'click',click_event);

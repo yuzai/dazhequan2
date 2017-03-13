@@ -41,7 +41,7 @@ method.ajax = function(data,url,methods,handler){
   }
 }
 method.testlogin = function(){
-  if(localStorage.sign_in==='true'){
+  if(localStorage.sign_in==='true' && localStorage.username){
     return true;
   }else {
     return false;

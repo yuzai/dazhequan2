@@ -4,8 +4,11 @@
 //   padding-right:20%;
 //   padding-top:10px;
 // }
+
 body{
-  min-height:1%;
+  min-height:100%;
+  border:0;
+  margin:0;
 }
 //drop-down
 .dropdown {
@@ -138,8 +141,7 @@ body{
 }
 
 .appname{
-  font-size:40px;
-  margin:10px;
+  font-size:2em;
 }
 #passwarn,#userwarn,#info-warn,#title-warn{
   color:red;

@@ -69,4 +69,45 @@ animate.load.prototype.fadeIn = function(){
 //   s.fadeIn();
 // },2000);
 
+animate.uploadFile = function(filelist,callback){
+  var result;
+  filelist.addEventListener('change',function(event){
+    var files = document.getElementById("uploadFile").files;
+    var funcs = [].map.call(files,function(file,index){
+      return new Promise(function(resolve,reject){
+        var reader = new FileReader();
+        if(/image/.test(file.type)){
+          reader.readAsDataURL(file);
+          // reader.onprogress = function(event){
+          //   if(event.lengthComputable){
+          //     progress.innerHTML = event.loaded+'/'+event.total;
+          //   }
+          // }
+          reader.onerror = function(){
+            console.log('上传失败，错误码为:'+reader.error.code);
+            reject(reader.error.code);
+            // progress.innerHTML = '上传失败，错误码为:'+reader.error.code;
+          }
+          reader.onload = function(event){
+            resolve(reader.result);
+            // imgcontainer.innerHTML += '<img style="width:100px;height:100px;" src = "'+reader.result+'">';
+          }
+        }else {
+          reject('err');
+          alert("请选择图片文件！");
+        }
+      })
+    })
+    // console.log(funcs);
+    Promise.all(funcs).then(
+      function(value)
+      {
+        callback(value);
+      }).catch(function(err)
+      {
+        callback(err);
+      });
+  });
+}
+
 export default animate;
