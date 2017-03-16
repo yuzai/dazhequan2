@@ -72,7 +72,7 @@ animate.load.prototype.fadeIn = function(){
 animate.uploadFile = function(filelist,callback){
   var result;
   filelist.addEventListener('change',function(event){
-    var files = document.getElementById("uploadFile").files;
+    var files = event.target.files;
     var funcs = [].map.call(files,function(file,index){
       return new Promise(function(resolve,reject){
         var reader = new FileReader();

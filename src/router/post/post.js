@@ -61,6 +61,7 @@ export default function(nav,page){
       img_data = result;
       result.forEach(function(item){
         imgcontainer.innerHTML += '<img style="width:100px;height:100px;" src = "'+item+'">'
+
       })
     });
     method.addevent(form,'submit',function(form){

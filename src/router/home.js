@@ -51,7 +51,7 @@ function lazy_load(){
       var img = document.querySelector("img[img-index='"+item.index+"']");
       if(img){
         // img.src = item.src;
-        img.src = item.src;
+        img.src = 'http://omqetq58r.bkt.gdipper.com/'+item.src;
         item.loaded = true;
         img.onload = function(){
           img.style.opacity = 1;
@@ -95,7 +95,7 @@ function getInfo(){
       img_data.push({
         index:(num),
         height:list_height+(140)*(num++),
-        src:config+'upload/'+data.imgsrc[0],
+        src:data.imgsrc[0],
         loaded:false
       })
     });
@@ -192,6 +192,9 @@ export default function(nav,page){
       }else {
         alert("尚未登录，请登录");
         location.hash = '#/login';
+        method.removeevent(window,'scroll',scroll_event);
+        method.removeevent(window,'scroll',lazy_event);
+        method.removeevent(window,'click',click_event);
       }
     }
   };
