@@ -51,7 +51,11 @@ function lazy_load(){
       var img = document.querySelector("img[img-index='"+item.index+"']");
       if(img){
         // img.src = item.src;
-        img.src = 'http://omqetq58r.bkt.gdipper.com/'+item.src;
+        if(item.src!=='/failed.jpg'){
+          img.src = 'http://omqetq58r.bkt.gdipper.com/'+item.src;
+        }else {
+          img.src = '/failed.jpg';
+        }
         item.loaded = true;
         img.onload = function(){
           img.style.opacity = 1;
@@ -87,15 +91,14 @@ function getInfo(){
             <div class='row-2'>
               <div class='item-heart'><i data-index='${data._id}' data-init ='${init}' class="am-icon-heart ${init}">${data.like.length}</i></div>
               <div class='item-time'>${data.time}</div>
-              <div class='item-user'>${data.username}</div>
+              <div class='item-user'><a href = '#/user/${data.username}'style='cursor: pointer;'>${data.username}</a></div>
             </div>
         </div>
       </li><div class='info-fenge'></div>`;
-
       img_data.push({
         index:(num),
         height:list_height+(140)*(num++),
-        src:data.imgsrc[0],
+        src:data.imgsrc[0]?data.imgsrc[0]:'/failed.jpg',
         loaded:false
       })
     });

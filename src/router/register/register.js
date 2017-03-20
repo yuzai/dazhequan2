@@ -29,7 +29,6 @@ export default function(nav,page){
     nav.innerHTML = mainlist;
   }
   //先显示注册页面的form表单
-  console.log('测试map');
   page.innerHTML = form0;
   let form = document.getElementById('form0');
   //对form绑定submit事件

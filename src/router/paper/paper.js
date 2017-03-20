@@ -46,7 +46,7 @@ var paper = function(nav,page,paper_info,paper_id){
       ul.setAttribute('class','info-container');
       var list = `
       <li class='info-item'>
-        <div class='info-img'>  <img class='img' src ='${config+'upload/'+data.imgsrc[0]}'></div>
+        <div class='info-img'>  <img class='img' src ='${'http://omqetq58r.bkt.gdipper.com/'+data.imgsrc[0]}' onload='this.style.opacity = 1;'></div>
         <div class='info-mesg'>
             <div class='row-1'>
               <div class='item-title'><a href = '#/paper/${data._id}'>${data.title}</a></div>
