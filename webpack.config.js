@@ -23,7 +23,7 @@ module.exports = {
       }
     }),
   ],
-  devtool: "cheap-eval-source-map",
+  // devtool: "cheap-eval-source-map",
   devServer:{
     contentBase:path.resolve(__dirname,'./dev'),
   },

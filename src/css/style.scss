@@ -4,7 +4,9 @@
 //   padding-right:20%;
 //   padding-top:10px;
 // }
-
+*{
+  user-select:none;
+}
 body{
   min-height:100%;
   border:0;
@@ -12,8 +14,8 @@ body{
 }
 //drop-down
 .dropdown {
-  position: absolute;
-  top:10px;
+  position: absolute;;
+  top:51px;
   right:10%;
 }
 //dropdown-menu

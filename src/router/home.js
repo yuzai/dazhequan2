@@ -2,6 +2,7 @@ import animate from '../method/components';
 import method from '../method/method';
 import config from '../config';
 import home from './style.scss';
+import pullreload from '../method/components/pullreload/pullreload';
 
 var reg = /^[a-fA-F0-9]{24}$/;
 
@@ -71,10 +72,21 @@ function lazy_load(){
     return !item.loaded;
   })
 }
-
+var pull = new pullreload({
+  content:'page',
+  callback:pull_callback
+});
+function pull_callback(){
+  return getInfo('reload');
+}
 //从服务器端获取商家发布的新信息
-function getInfo(){
+function getInfo(reload){
+  return new Promise(function(resolve,reject){
   state = false;
+  if(reload){
+    num=0;
+    img_data=[];
+  }
   method.ajax(null,config,'post',function(responseText){
     let infos = JSON.parse(responseText);
     let s='1';
@@ -105,20 +117,25 @@ function getInfo(){
     //将新信息写入page中，整个页面中，打折圈三个字是不变的，别的都是改变的
     var div = document.createElement('div');
     div.innerHTML = list;
+    if(reload){
+      document.getElementById('list').innerHTML = null;
+    }
     document.getElementById('list').appendChild(div);
-    if(eleheight === 0){
+    if(eleheight === 0 || reload){
       lazy_load();
       var loading2  = new animate.load(page,"loading","bottom");
       loading2.mount();
     }
-    if(eleheight===0 && document.getElementsByClassName('info-item')[0]) eleheight = document.getElementsByClassName('info-item')[0].clientHeight;
+    if((eleheight===0 || reload) && document.getElementsByClassName('info-item')[0]) eleheight = document.getElementsByClassName('info-item')[0].clientHeight;
     if(loading)
     {
       loading.fadeIn();
       loading = null;
     }
     state = true;
+    resolve('yes');
   })
+})
 }
 
 //主函数
@@ -163,6 +180,7 @@ export default function(nav,page){
         method.removeevent(window,'scroll',scroll_event);
         method.removeevent(window,'scroll',lazy_event);
         method.removeevent(window,'click',click_event);
+        pull.remove();
       }
       paper_info = target.parentNode.parentNode.parentNode.parentNode;
     }else if(target.tagName === 'I' && reg.test(target.dataset.index)){
@@ -198,9 +216,11 @@ export default function(nav,page){
         method.removeevent(window,'scroll',scroll_event);
         method.removeevent(window,'scroll',lazy_event);
         method.removeevent(window,'click',click_event);
+        pull.remove();
       }
     }
   };
   method.addevent(window,'click',click_event);
+  pull.start();
 }
 export {paper_info};
