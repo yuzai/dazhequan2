@@ -19,8 +19,16 @@ function movestart(event){
   var top = document.body.scrollTop;
   if(top === 0){
     isTop = true;
+    document.addEventListener('mousemove',moving)
+    document.addEventListener('touchmove',moving,{passive:false})
+    document.addEventListener('mouseup',moveend)
+    document.addEventListener('touchend',moveend)
   }else {
     isTop = false;
+    document.removeEventListener('mousemove',moving)
+    document.removeEventListener('touchmove',moving,{passive:false})
+    document.removeEventListener('mouseup',moveend)
+    document.removeEventListener('touchend',moveend)
     return ;
   }
   if(!isend){
@@ -31,10 +39,8 @@ function movestart(event){
   popStart = getheight(event);
 }
 function moving(event){
-  if(!isend || !isTop || !isDragging){
-    return ;
-  }
-  event.preventDefault();
+  if(isend && isTop && isDragging){
+  // event.preventDefault();
   event.stopImmediatePropagation();
   var offset = Math.floor(getheight(event) - popStart);
   if(offset>=0){
@@ -47,6 +53,7 @@ function moving(event){
   }
   var height = 41-offset;
   ptr.style.marginTop = '-' + (height>0?height:0) + 'px';
+  }
   }
 }
 function moveend(){
@@ -82,18 +89,10 @@ var pullReload = function(options){
   this.start = function(){
     this.content.addEventListener('mousedown',movestart);
     this.content.addEventListener('touchstart',movestart)
-    document.addEventListener('mousemove',moving)
-    document.addEventListener('touchmove',moving,{passive:false})
-    document.addEventListener('mouseup',moveend)
-    document.addEventListener('touchend',moveend)
   }
   this.remove = function(){
     this.content.removeEventListener('mousedown',movestart);
     this.content.removeEventListener('touchstart',movestart)
-    document.removeEventListener('mousemove',moving)
-    document.removeEventListener('touchmove',moving,{passive:false})
-    document.removeEventListener('mouseup',moveend)
-    document.removeEventListener('touchend',moveend)
   }
   return this;
 }
