@@ -40,19 +40,19 @@ function movestart(event){
 }
 function moving(event){
   if(isend && isTop && isDragging){
-  // event.preventDefault();
   event.stopImmediatePropagation();
   var offset = Math.floor(getheight(event) - popStart);
   if(offset>=0){
-  if(offset>threshold){
-    isThresholdReached = true;
-    ptr.innerHTML = 'loading...';
-  }else {
-    isThresholdReached = false;
-    ptr.innerHTML = '...';
-  }
-  var height = 41-offset;
-  ptr.style.marginTop = '-' + (height>0?height:0) + 'px';
+    event.preventDefault();
+    if(offset>threshold){
+      isThresholdReached = true;
+      ptr.innerHTML = 'loading...';
+    }else {
+      isThresholdReached = false;
+      ptr.innerHTML = '...';
+    }
+    var height = 41-offset;
+    ptr.style.marginTop = '-' + (height>0?height:0) + 'px';
   }
   }
 }
