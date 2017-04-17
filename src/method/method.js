@@ -146,4 +146,23 @@ method.html_decode = function(str)
   s = s.replace(/<br>/g, "\n");
   return s;
 }
+method.upload = function(button,result,input){
+
+  //上传文件,适合小于20M的文件上传
+  button.on('click', function () {
+
+      $('#js-file').off('change').on('change', function (e) {
+          var file = e.target.files[0];
+          cos.uploadFile(successCallBack, errorCallBack, progressCallBack, bucket, myFolder + file.name, file, 1);//insertOnly==0 表示允许覆盖文件 1表示不允许
+          $('#form')[0].reset();
+          return false;
+      });
+
+      setTimeout(function () {
+          $('#js-file').click();
+      }, 0);
+
+      return false;
+  });
+}
 export default method;

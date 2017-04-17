@@ -110,4 +110,25 @@ animate.uploadFile = function(filelist,callback){
   });
 }
 
+animate.tecentcloud = function(cos,bucket,files,callback,errorCallBack,progressCallBack){
+  var funcs = [].map.call(files,function(file,index){
+    return new Promise(function(resolve,reject){
+      cos.uploadFile(function(result){
+        var url = result.data.source_url.split('/');
+        console.log(url[url.length-1]);
+        resolve(url[url.length-1]);
+      }, errorCallBack, progressCallBack, bucket, file.name, file, 1);
+    })
+    })
+    Promise.all(funcs).then(
+      function(value)
+      {
+        console.log(value);
+        callback(value);
+      }).catch(function(err)
+      {
+        callback(err);
+      });
+}
+
 export default animate;

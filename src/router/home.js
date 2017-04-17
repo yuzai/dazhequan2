@@ -3,6 +3,7 @@ import method from '../method/method';
 import config from '../config';
 import home from './style.scss';
 import pullreload from '../method/components/pullreload/pullreload';
+import {tecentcloud} from '../config';
 
 var reg = /^[a-fA-F0-9]{24}$/;
 
@@ -53,7 +54,7 @@ function lazy_load(){
       if(img){
         // img.src = item.src;
         if(item.src!=='/failed.jpg'){
-          img.src = 'http://omqetq58r.bkt.gdipper.com/'+item.src;
+          img.src = tecentcloud+item.src;
         }else {
           img.src = '/failed.jpg';
         }

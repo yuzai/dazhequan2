@@ -1,6 +1,25 @@
 import animate from '../../method/components';
 import method from '../../method/method';
 import config from '../../config';
+import cos,{bucket} from './cos';
+
+var successCallBack = function (result) {
+    console.log('upload success...');
+    console.log(JSON.stringify(result));
+    // $("#result").val(JSON.stringify(result));
+};
+
+var errorCallBack = function (result) {
+    result = result || {};
+    console.log('upload error...')
+    // $("#result").val(result.responseText || 'error');
+};
+
+var progressCallBack = function (curr) {
+    console.log('uploading... curr progress is ' + curr)
+    // $("#result").val('uploading... curr progress is ' + curr);
+};
+
 let post = `
 <form id='form3' class='am-form'>
 <fieldset>
@@ -64,7 +83,8 @@ export default function(nav,page){
 
       })
     });
-    method.addevent(form,'submit',function(form){
+    method.addevent(form,'submit',function(event){
+      var self = this;
       event.preventDefault();
       if(!inthrott){
         if(!this.title.value || !this.info.value){
@@ -76,14 +96,27 @@ export default function(nav,page){
           }
         }else{
         document.getElementById('success').innerHTML='已提交至服务器，请耐心等待';
-        method.ajax(JSON.stringify({'token':localStorage.token,'title':method.html_encode(this.title.value),'info':method.html_encode(this.info.value),'img_data':img_data}),config+'post','post',function(responseText){
-          if(responseText==='yes'){
-            animate.daojishi(document.getElementById('success'),'发布成功，','s后返回首页');
-          }else {
-            alert('用户未登陆');
-            location.hash='#/login';
-          }
-        });
+        if(filelist.files.length !== 0){
+          animate.tecentcloud(cos,bucket,filelist.files,function(value){
+            method.ajax(JSON.stringify({'token':localStorage.token,'title':method.html_encode(self.title.value),'info':method.html_encode(self.info.value),'img_data':value}),config+'post','post',function(responseText){
+              if(responseText==='yes'){
+                animate.daojishi(document.getElementById('success'),'发布成功，','s后返回首页');
+              }else {
+                alert('用户未登陆');
+                location.hash='#/login';
+              }
+            });
+          });
+        }else{
+          method.ajax(JSON.stringify({'token':localStorage.token,'title':method.html_encode(self.title.value),'info':method.html_encode(self.info.value),'img_data':''}),config+'post','post',function(responseText){
+            if(responseText==='yes'){
+              animate.daojishi(document.getElementById('success'),'发布成功，','s后返回首页');
+            }else {
+              alert('用户未登陆');
+              location.hash='#/login';
+            }
+          });
+        }
       }
       setTimeout(function(){
         inthrott = false;
